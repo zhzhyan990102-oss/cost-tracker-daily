@@ -1,0 +1,104 @@
+# 人工标注基准价格
+# 用途：当所有 API 数据源均不可用时，使用此文件中的基准价格
+# 维护方式：每月由产品经理根据实际采购报价更新一次
+# 价格单位：元/吨（除非特殊标注）
+
+last_updated: "2026-07-31"
+updated_by: "产品经理"
+
+anchors:
+  # ---- 钢材 ----
+  - material: "冷轧板卷"
+    spec: "SPCC 1.0mm"
+    anchor_price: 4520
+    unit: "元/吨"
+
+  - material: "热轧板卷"
+    spec: "Q235B 3.0mm"
+    anchor_price: 3850
+    unit: "元/吨"
+
+  - material: "管材"
+    spec: "Q235 焊管 DN25"
+    anchor_price: 4180
+    unit: "元/吨"
+
+  # ---- 木材/人造板 ----
+  - material: "刨花板"
+    spec: "E1级 16mm"
+    anchor_price: 1850
+    unit: "元/立方米"
+
+  - material: "中纤板MDF"
+    spec: "E1级 15mm"
+    anchor_price: 2100
+    unit: "元/立方米"
+
+  # ---- 海绵/聚氨酯原料 ----
+  - material: "TDI"
+    spec: "国标"
+    anchor_price: 16800
+    unit: "元/吨"
+
+  - material: "聚合MDI"
+    spec: "PM200"
+    anchor_price: 15500
+    unit: "元/吨"
+
+  - material: "聚醚多元醇"
+    spec: "普通软泡"
+    anchor_price: 9800
+    unit: "元/吨"
+
+  - material: "白聚醚"
+    spec: "高回弹"
+    anchor_price: 12500
+    unit: "元/吨"
+
+  - material: "甲苯"
+    spec: "国标"
+    anchor_price: 7200
+    unit: "元/吨"
+
+  - material: "甘油"
+    spec: "工业级99.5%"
+    anchor_price: 5500
+    unit: "元/吨"
+
+  # ---- 塑料 ----
+  - material: "PP拉丝"
+    spec: "T30S"
+    anchor_price: 7600
+    unit: "元/吨"
+
+  - material: "PE"
+    spec: "LLDPE 7042"
+    anchor_price: 8200
+    unit: "元/吨"
+
+  - material: "PVC"
+    spec: "SG-5"
+    anchor_price: 5800
+    unit: "元/吨"
+
+  # ---- 面料/纺织 ----
+  - material: "涤纶POY"
+    spec: "150D/48F"
+    anchor_price: 7500
+    unit: "元/吨"
+
+  - material: "涤纶FDY"
+    spec: "150D/96F"
+    anchor_price: 8100
+    unit: "元/吨"
+
+  - material: "无纺布"
+    spec: "PP纺粘 50g"
+    anchor_price: 13500
+    unit: "元/吨"
+
+  # ---- 地毯原料 ----
+  - material: "丙纶BCF"
+    spec: "1200D"
+    anchor_price: 11000
+    unit: "元/吨"

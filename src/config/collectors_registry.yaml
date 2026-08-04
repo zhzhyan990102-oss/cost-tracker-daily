@@ -1,0 +1,134 @@
+# 采集器注册表（已校准：使用生意社 ak.futures_spot_price 接口）
+# 品种代码来自期货交易所标准代码
+
+collectors:
+  # ======== 钢材类 ========
+  # 注：99qh无冷轧板卷，用热轧卷板(HC)作钢材基准参考
+  - material: "冷轧板卷"
+    primary:
+      type: "akshare_futures"
+      code: "HC"
+    fallback:
+      type: "anchor"
+
+  - material: "热轧板卷"
+    primary:
+      type: "akshare_futures"
+      code: "HC"
+    fallback:
+      type: "anchor"
+
+  # 管材用螺纹钢(RB)作钢材趋势参考
+  - material: "管材"
+    primary:
+      type: "akshare_futures"
+      code: "RB"
+    fallback:
+      type: "anchor"
+
+  # ======== 木材类 ========
+  # FB(纤维板)/BB(胶合板)为DCE极不活跃品种，生意社无每日现货报价
+  # 直接使用锚点价格，需每月手动更新
+  - material: "刨花板"
+    primary:
+      type: "anchor"
+    fallback:
+      type: "anchor"
+
+  - material: "中纤板MDF"
+    primary:
+      type: "anchor"
+    fallback:
+      type: "anchor"
+
+  # ======== 海绵/聚氨酯原料 ========
+  # TDI/MDI/聚醚在生意社无标准期货品种，使用锚点
+  - material: "TDI"
+    primary:
+      type: "anchor"
+    fallback:
+      type: "anchor"
+
+  - material: "聚合MDI"
+    primary:
+      type: "anchor"
+    fallback:
+      type: "anchor"
+
+  - material: "聚醚多元醇"
+    primary:
+      type: "anchor"
+    fallback:
+      type: "anchor"
+
+  - material: "白聚醚"
+    primary:
+      type: "anchor"
+    fallback:
+      type: "anchor"
+
+  - material: "甲苯"
+    primary:
+      type: "anchor"
+    fallback:
+      type: "anchor"
+
+  - material: "甘油"
+    primary:
+      type: "anchor"
+    fallback:
+      type: "anchor"
+
+  # ======== 塑料 ========
+  - material: "PP拉丝"
+    primary:
+      type: "akshare_futures"
+      code: "PP"
+    fallback:
+      type: "anchor"
+
+  - material: "PE"
+    primary:
+      type: "akshare_futures"
+      code: "L"
+    fallback:
+      type: "anchor"
+
+  - material: "PVC"
+    primary:
+      type: "akshare_futures"
+      code: "V"
+    fallback:
+      type: "anchor"
+
+  # ======== 面料/纺织 ========
+  - material: "涤纶POY"
+    primary:
+      type: "akshare_futures"
+      code: "PF"
+    fallback:
+      type: "anchor"
+
+  - material: "涤纶FDY"
+    primary:
+      type: "akshare_futures"
+      code: "TA"
+    fallback:
+      type: "anchor"
+
+  # 无纺布用纸浆(SP)作原料成本参考
+  - material: "无纺布"
+    primary:
+      type: "akshare_futures"
+      code: "SP"
+    fallback:
+      type: "anchor"
+
+  # ======== 地毯原料 ========
+  # 丙纶BCF用聚丙烯(PP)作原料参考
+  - material: "丙纶BCF"
+    primary:
+      type: "akshare_futures"
+      code: "PP"
+    fallback:
+      type: "anchor"

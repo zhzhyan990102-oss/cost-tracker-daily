@@ -1,0 +1,234 @@
+# 原材料 → 产地 → 品类成本影响映射表
+# cost_weight: 该原材料占成品总成本的比重（0-1），用于量化成本影响
+#
+# 成本影响 = 原材料价格变化率 × cost_weight
+# 例：冷轧板涨5%，cost_weight=0.45 → 置物架成本上升约 5%×0.45 = 2.25%
+
+mappings:
+  # ======== 钢材类 ========
+  - material: "冷轧板卷"
+    affects:
+      - category: "置物架"
+        regions: ["广东", "山东"]
+        cost_weight: 0.45
+      - category: "衣橱架"
+        regions: ["广东"]
+        cost_weight: 0.40
+      - category: "落地衣架"
+        regions: ["广东", "广西"]
+        cost_weight: 0.40
+      - category: "钢木类家具"
+        regions: ["江苏"]
+        cost_weight: 0.30
+      - category: "钢木类"
+        regions: ["越南"]
+        cost_weight: 0.35
+      - category: "钢木床"
+        regions: ["越南"]
+        cost_weight: 0.35
+      - category: "置物架"
+        regions: ["柬埔寨"]
+        cost_weight: 0.45
+
+  - material: "热轧板卷"
+    affects:
+      - category: "置物架"
+        regions: ["广东", "山东"]
+        cost_weight: 0.25
+      - category: "衣橱架"
+        regions: ["广东"]
+        cost_weight: 0.20
+      - category: "落地衣架"
+        regions: ["广东", "广西"]
+        cost_weight: 0.20
+      - category: "钢木类家具"
+        regions: ["江苏"]
+        cost_weight: 0.25
+      - category: "钢木类"
+        regions: ["越南"]
+        cost_weight: 0.25
+      - category: "钢木床"
+        regions: ["越南"]
+        cost_weight: 0.30
+
+  - material: "管材"
+    affects:
+      - category: "置物架"
+        regions: ["广东", "山东"]
+        cost_weight: 0.15
+      - category: "衣橱架"
+        regions: ["广东"]
+        cost_weight: 0.10
+      - category: "落地衣架"
+        regions: ["广东", "广西"]
+        cost_weight: 0.20
+      - category: "钢木类家具"
+        regions: ["江苏"]
+        cost_weight: 0.10
+
+  # ======== 木材/人造板 ========
+  - material: "刨花板"
+    affects:
+      - category: "板式家具"
+        regions: ["福建"]
+        cost_weight: 0.50
+      - category: "床架"
+        regions: ["福建", "马来西亚"]
+        cost_weight: 0.40
+      - category: "钢木类家具"
+        regions: ["江苏"]
+        cost_weight: 0.20
+      - category: "置物架"
+        regions: ["柬埔寨"]
+        cost_weight: 0.10
+
+  - material: "中纤板MDF"
+    affects:
+      - category: "板式家具"
+        regions: ["福建"]
+        cost_weight: 0.30
+      - category: "床架"
+        regions: ["福建", "马来西亚"]
+        cost_weight: 0.25
+      - category: "钢木类家具"
+        regions: ["江苏"]
+        cost_weight: 0.15
+      - category: "钢木类"
+        regions: ["越南"]
+        cost_weight: 0.10
+
+  # ======== 海绵/聚氨酯原料 ========
+  - material: "TDI"
+    affects:
+      - category: "海绵床垫"
+        regions: ["天津"]
+        cost_weight: 0.25
+      - category: "软体床垫类"
+        regions: ["浙江", "天津"]
+        cost_weight: 0.25
+      - category: "床垫"
+        regions: ["摩洛哥", "约旦", "巴基斯坦"]
+        cost_weight: 0.25
+
+  - material: "聚合MDI"
+    affects:
+      - category: "海绵床垫"
+        regions: ["天津"]
+        cost_weight: 0.25
+      - category: "软体床垫类"
+        regions: ["浙江", "天津"]
+        cost_weight: 0.25
+      - category: "床垫"
+        regions: ["摩洛哥", "约旦", "巴基斯坦"]
+        cost_weight: 0.25
+
+  - material: "聚醚多元醇"
+    affects:
+      - category: "海绵床垫"
+        regions: ["天津"]
+        cost_weight: 0.20
+      - category: "软体床垫类"
+        regions: ["浙江", "天津"]
+        cost_weight: 0.20
+      - category: "床垫"
+        regions: ["摩洛哥", "约旦", "巴基斯坦"]
+        cost_weight: 0.20
+
+  - material: "白聚醚"
+    affects:
+      - category: "海绵床垫"
+        regions: ["天津"]
+        cost_weight: 0.15
+      - category: "软体床垫类"
+        regions: ["浙江", "天津"]
+        cost_weight: 0.15
+      - category: "床垫"
+        regions: ["摩洛哥", "约旦", "巴基斯坦"]
+        cost_weight: 0.15
+
+  - material: "甲苯"
+    affects:
+      - category: "海绵床垫"
+        regions: ["天津"]
+        cost_weight: 0.10
+      - category: "软体床垫类"
+        regions: ["浙江", "天津"]
+        cost_weight: 0.10
+      - category: "床垫"
+        regions: ["摩洛哥", "约旦", "巴基斯坦"]
+        cost_weight: 0.10
+
+  - material: "甘油"
+    affects:
+      - category: "海绵床垫"
+        regions: ["天津"]
+        cost_weight: 0.05
+      - category: "软体床垫类"
+        regions: ["浙江", "天津"]
+        cost_weight: 0.05
+      - category: "床垫"
+        regions: ["摩洛哥", "约旦", "巴基斯坦"]
+        cost_weight: 0.05
+
+  # ======== 塑料 ========
+  - material: "PP拉丝"
+    affects:
+      - category: "塑料制品"
+        regions: ["浙江"]
+        cost_weight: 0.50
+      - category: "地毯"
+        regions: ["浙江", "天津"]
+        cost_weight: 0.10
+
+  - material: "PE"
+    affects:
+      - category: "塑料制品"
+        regions: ["浙江"]
+        cost_weight: 0.30
+
+  - material: "PVC"
+    affects:
+      - category: "塑料制品"
+        regions: ["浙江"]
+        cost_weight: 0.30
+
+  # ======== 面料/纺织 ========
+  - material: "涤纶POY"
+    affects:
+      - category: "软体床垫类"
+        regions: ["浙江", "天津"]
+        cost_weight: 0.15
+      - category: "布抽类"
+        regions: ["越南"]
+        cost_weight: 0.40
+      - category: "床垫"
+        regions: ["摩洛哥", "约旦", "巴基斯坦"]
+        cost_weight: 0.15
+      - category: "地毯"
+        regions: ["浙江", "天津"]
+        cost_weight: 0.30
+
+  - material: "涤纶FDY"
+    affects:
+      - category: "布抽类"
+        regions: ["越南"]
+        cost_weight: 0.30
+      - category: "软体床垫类"
+        regions: ["浙江", "天津"]
+        cost_weight: 0.10
+
+  - material: "无纺布"
+    affects:
+      - category: "软体床垫类"
+        regions: ["浙江", "天津"]
+        cost_weight: 0.10
+      - category: "床垫"
+        regions: ["摩洛哥", "约旦", "巴基斯坦"]
+        cost_weight: 0.10
+
+  # ======== 地毯原料 ========
+  - material: "丙纶BCF"
+    affects:
+      - category: "地毯"
+        regions: ["浙江", "天津"]
+        cost_weight: 0.50
