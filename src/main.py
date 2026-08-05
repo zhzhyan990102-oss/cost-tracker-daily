@@ -207,4 +207,11 @@ def _send_holiday_report():
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    try:
+        code = main()
+    except Exception as e:
+        logger.error(f"未捕获异常: {e}", exc_info=True)
+        code = 1
+    sys.stdout.flush()
+    sys.stderr.flush()
+    os._exit(code)
