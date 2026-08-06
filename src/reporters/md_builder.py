@@ -1,5 +1,6 @@
 """Markdown 日报构造器 — 精要播报 + 完整明细"""
 
+import math
 from datetime import date, timedelta
 from pathlib import Path
 from loguru import logger
@@ -7,6 +8,32 @@ from loguru import logger
 from src.collectors.base import ForexDataPoint, MacroDataPoint
 from src.processors.cost_mapper import RegionCostImpact, MaterialChange
 from src.processors.intelligence_compiler import IntelligenceReport
+
+
+def _is_valid_number(val) -> bool:
+    """检查值是否为有效数值"""
+    if val is None:
+        return False
+    try:
+        f = float(val)
+        if math.isnan(f) or math.isinf(f):
+            return False
+        return True
+    except (ValueError, TypeError):
+        return False
+
+
+def _is_valid_forex(forex: ForexDataPoint) -> bool:
+    """检查汇率数据是否有效（非兜底值）"""
+    if not forex or not _is_valid_number(forex.rate):
+        return False
+    # 兜底值 7.25 且无变动 = 采集失败
+    if forex.rate == 7.25 and forex.change_pct is None:
+        return False
+    # 合理区间
+    if forex.rate < 6.50 or forex.rate > 8.50:
+        return False
+    return True
 
 
 class DailyReportBuilder:
@@ -129,28 +156,36 @@ class DailyReportBuilder:
     def _build_macro_line(self) -> str:
         """宏观一行摘要（只显示有效数据，过滤历史异常）"""
         parts = []
-        if self.intelligence.ppi and self.intelligence.ppi.value != 0.0 and self.intelligence.ppi.period:
+        if (self.intelligence.ppi and _is_valid_number(self.intelligence.ppi.value)
+                and self.intelligence.ppi.value != 0.0 and self.intelligence.ppi.period):
             if self.intelligence.ppi.period[:4] in ("2025", "2026"):
                 parts.append(f"PPI {self.intelligence.ppi.value:+.1f}%")
-        if self.intelligence.cpi and self.intelligence.cpi.value != 0.0 and self.intelligence.cpi.period:
+        if (self.intelligence.cpi and _is_valid_number(self.intelligence.cpi.value)
+                and self.intelligence.cpi.value != 0.0 and self.intelligence.cpi.period):
             if self.intelligence.cpi.period[:4] in ("2025", "2026"):
                 parts.append(f"CPI {self.intelligence.cpi.value:+.1f}%")
-        if self.intelligence.forex and self.intelligence.forex.rate != 7.25:
+        if _is_valid_forex(self.intelligence.forex):
             parts.append(f"USDCNH {self.intelligence.forex.rate:.4f}")
         return " | ".join(parts) if parts else ""
 
     def _build_macro_detail(self) -> str:
         """宏观指标详情"""
         lines = []
-        if self.intelligence.ppi and self.intelligence.ppi.value != 0.0 and self.intelligence.ppi.period:
+        if (self.intelligence.ppi and _is_valid_number(self.intelligence.ppi.value)
+                and self.intelligence.ppi.value != 0.0 and self.intelligence.ppi.period):
             if self.intelligence.ppi.period[:4] in ("2025", "2026"):
                 lines.append(f"- **PPI**（{self.intelligence.ppi.period}）：同比 {self.intelligence.ppi.value:+.1f}%")
-        if self.intelligence.cpi and self.intelligence.cpi.value != 0.0 and self.intelligence.cpi.period:
+        if (self.intelligence.cpi and _is_valid_number(self.intelligence.cpi.value)
+                and self.intelligence.cpi.value != 0.0 and self.intelligence.cpi.period):
             if self.intelligence.cpi.period[:4] in ("2025", "2026"):
                 lines.append(f"- **CPI**（{self.intelligence.cpi.period}）：同比 {self.intelligence.cpi.value:+.1f}%")
-        if self.intelligence.forex and self.intelligence.forex.rate != 7.25:
-            direction = "↑" if self.intelligence.forex.change_pct and self.intelligence.forex.change_pct > 0 else "↓" if self.intelligence.forex.change_pct else ""
-            lines.append(f"- **USD/CNH**：{self.intelligence.forex.rate:.4f} {direction}")
+        if _is_valid_forex(self.intelligence.forex):
+            forex = self.intelligence.forex
+            change_pct = forex.change_pct if _is_valid_number(forex.change_pct) else None
+            direction = ""
+            if change_pct is not None:
+                direction = "↑" if change_pct > 0 else "↓" if change_pct < 0 else ""
+            lines.append(f"- **USD/CNH**：{forex.rate:.4f} {direction}")
         return "\n".join(lines) if lines else ""
 
     # ====== 波动项 ======
@@ -171,10 +206,12 @@ class DailyReportBuilder:
         region, category, mc = mover
         direction = "↑" if (mc.change_pct or 0) > 0 else "↓"
         alert_icon = {"ALERT": "🔴", "WARNING": "🟡"}.get(mc.alert_level, "🟢")
+        pct = mc.change_pct if _is_valid_number(mc.change_pct) else 0.0
+        price = mc.price if _is_valid_number(mc.price) else 0
         return (
             f"- {alert_icon} **{mc.material_name}** {direction}"
-            f"{abs(mc.change_pct):.2f}%（较30天前） "
-            f"| 现价 {mc.price:,.0f} {mc.price_unit} "
+            f"{abs(pct):.2f}%（较30天前） "
+            f"| 现价 {price:,.0f} {mc.price_unit} "
             f"| 影响：{region}·{category}"
         )
 
